@@ -209,6 +209,11 @@
 			<name>张砚池</name>
 			<email>yangkizhang@gmail.com</email>
 		</developer>
+		<developer>
+			<id>linrol</id>
+			<name>罗林</name>
+			<email>18883754124@163.com</email>
+		</developer>
 	</developers>
 
 	<distributionManagement>
