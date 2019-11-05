@@ -1,6 +1,9 @@
 package com.alibaba.dubbo.spring.boot;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -62,9 +65,9 @@ public class DubboConsumerAutoConfiguration extends DubboCommonAutoConfiguration
         } else {
           objClz = bean.getClass();
         }
-
+        List<Field> fieldList = getAllFields(objClz);
         try {
-          for (Field field : objClz.getDeclaredFields()) {
+          for (Field field : fieldList) {
             Reference reference = field.getAnnotation(Reference.class);
             if (reference != null) {
               DubboConsumerAutoConfiguration.this
@@ -146,6 +149,15 @@ public class DubboConsumerAutoConfiguration extends DubboCommonAutoConfiguration
     referenceBean.setApplicationContext(DubboConsumerAutoConfiguration.this.applicationContext);
     return referenceBean;
   }
+  
+  private static List<Field> getAllFields(Class<?> clazz){
+	  List<Field> fieldList = new ArrayList<Field>();
+	  while (clazz != null){
+	    fieldList.addAll(new ArrayList<>(Arrays.asList(clazz.getDeclaredFields())));
+	    clazz = clazz.getSuperclass();
+	  }
+	  return fieldList;
+	}
 
   @Override
   protected String buildErrorMsg(String... errors) {
