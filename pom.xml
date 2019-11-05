@@ -228,4 +228,5 @@
             <url>${maven.host}/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
 	</distributionManagement>
+	
 </project>
