@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
@@ -35,6 +36,8 @@ public class DubboProviderAutoConfiguration extends DubboCommonAutoConfiguration
   private ApplicationContext applicationContext;
   @Autowired
   private DubboProperties properties;
+  @Autowired
+  private ApplicationEventPublisher applicationEventPublisher;
 
   @PostConstruct
   public void init() throws Exception {
@@ -79,6 +82,7 @@ public class DubboProviderAutoConfiguration extends DubboCommonAutoConfiguration
         this.parseProvider(provider, this.properties, environment, beanName, "provider", provider));
 
     serviceConfig.setApplicationContext(this.applicationContext);
+    serviceConfig.setApplicationEventPublisher(this.applicationEventPublisher);
     serviceConfig.afterPropertiesSet();
     serviceConfig.setRef(bean);
     serviceConfig.export();

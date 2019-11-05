@@ -19,7 +19,7 @@
 
 		<!-- dependencies -->
 		<spring-boot.version>1.5.10.RELEASE</spring-boot.version>
-		<dubbo.version>2.6.0</dubbo.version>
+		<dubbo.version>2.6.5</dubbo.version>
 
 		<!-- plugins -->
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
@@ -54,6 +54,16 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>4.2.0</version>
+        </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
