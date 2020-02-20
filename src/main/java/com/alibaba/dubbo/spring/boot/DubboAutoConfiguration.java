@@ -2,6 +2,9 @@ package com.alibaba.dubbo.spring.boot;
 
 import java.util.concurrent.CountDownLatch;
 
+import org.apache.zookeeper.client.ZooKeeperSaslClient;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,7 +23,10 @@ import com.alibaba.dubbo.spring.boot.server.DubboServer;
  */
 @Configuration
 @EnableConfigurationProperties(DubboProperties.class)
-public class DubboAutoConfiguration {
+public class DubboAutoConfiguration implements InitializingBean {
+	
+  @Value("${spring.zk.sasl:false}")
+  private String zkSasl;
 
   /**
    * Start a non-daemon thread
@@ -57,4 +63,10 @@ public class DubboAutoConfiguration {
   public DubboHealthIndicator dubboHealthIndicator() {
     return new DubboHealthIndicator();
   }
+  
+  @Override
+  public void afterPropertiesSet() throws Exception {
+	System.setProperty(ZooKeeperSaslClient.ENABLE_CLIENT_SASL_KEY, zkSasl);
+  }
+  
 }
